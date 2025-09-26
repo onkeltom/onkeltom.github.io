@@ -1,14 +1,14 @@
 ---
 layout: default
 ---
-<article class="post" itemscope itemtype="https://schema.org/Article">
-  <header class="post-header">
+<article class="card stack" data-gap="lg" itemscope itemtype="https://schema.org/Article">
+  <header class="stack" data-gap="sm">
     <h1 class="post-title" itemprop="headline">{{ page.title }}</h1>
     {% if page.date %}
-    <p class="post-meta"><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: '%B %-d, %Y' }}</time></p>
+    <p class="meta"><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: '%B %-d, %Y' }}</time></p>
     {% endif %}
   </header>
-  <div class="post-content" itemprop="articleBody">
+  <div class="prose" itemprop="articleBody">
     {{ content }}
   </div>
 </article>

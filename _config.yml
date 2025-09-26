@@ -1,10 +1,11 @@
-title: Onkel Tom
-name: Onkel Tom
+title: Working with Carl
+name: Working with Carl
 description: "Modern, minimal personal site"
 url: https://onkeltom.github.io
 baseurl: ""
 permalink: /:categories/:title/
 timezone: Europe/Berlin
+og_image: /assets/img/og-default.svg
 markdown: kramdown
 collections:
   recipes:

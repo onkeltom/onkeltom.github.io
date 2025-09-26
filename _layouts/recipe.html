@@ -1,14 +1,14 @@
 ---
 layout: default
 ---
-<article class="recipe" itemscope itemtype="https://schema.org/Recipe">
-  <header class="recipe-header">
+<article class="card stack" data-gap="lg" itemscope itemtype="https://schema.org/Recipe">
+  <header class="stack" data-gap="sm">
     <h1 class="recipe-title" itemprop="name">{{ page.title }}</h1>
     {% if page.description %}
-    <p class="recipe-summary" itemprop="description">{{ page.description }}</p>
+    <p class="meta" itemprop="description">{{ page.description }}</p>
     {% endif %}
   </header>
-  <div class="recipe-content" itemprop="recipeInstructions">
+  <div class="prose" itemprop="recipeInstructions">
     {{ content }}
   </div>
 </article>

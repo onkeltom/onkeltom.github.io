@@ -1,13 +1,19 @@
 <header class="site-header" role="banner">
-  <div class="wrap">
-    <a class="site-title" href="{{ '/' | relative_url }}">{{ site.title }}</a>
-    <nav class="site-nav" aria-label="Primary">
-      <ul>
-        <li><a href="{{ '/' | relative_url }}">Home</a></li>
-        <li><a href="{{ '/posts/' | relative_url }}">Posts</a></li>
-        <li><a href="{{ '/recipes/' | relative_url }}">Recipes</a></li>
-        <li><a href="{{ '/about/' | relative_url }}">About</a></li>
-      </ul>
-    </nav>
+  <div class="container">
+    {% assign is_home = page.url == '/' or page.layout == 'home' %}
+    {% assign is_posts = page.collection == 'posts' or page.url == '/posts/' %}
+    {% assign is_recipes = page.collection == 'recipes' or page.url == '/recipes/' or page.is_recipe %}
+    {% assign is_about = page.url == '/about/' %}
+    <div class="cluster">
+      <a class="site-title" href="{{ '/' | relative_url }}">Working with Carl</a>
+      <nav class="primary-nav" aria-label="Primary">
+        <ul class="cluster" data-justify="start" role="list">
+          <li><a href="{{ '/' | relative_url }}"{% if is_home %} aria-current="page"{% endif %}>Home</a></li>
+          <li><a href="{{ '/posts/' | relative_url }}"{% if is_posts %} aria-current="page"{% endif %}>Posts</a></li>
+          <li><a href="{{ '/recipes/' | relative_url }}"{% if is_recipes %} aria-current="page"{% endif %}>Recipes</a></li>
+          <li><a href="{{ '/about/' | relative_url }}"{% if is_about %} aria-current="page"{% endif %}>About</a></li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </header>
