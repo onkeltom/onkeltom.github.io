@@ -315,6 +315,10 @@ h6 {
   gap: clamp(0.75rem, 1.5vw, 1.1rem);
 }
 
+.stack[data-gap="xs"] {
+  gap: clamp(0.5rem, 1vw, 0.75rem);
+}
+
 .stack[data-gap="lg"] {
   gap: clamp(2rem, 3vw, 2.75rem);
 }
@@ -493,11 +497,53 @@ pre {
 }
 
 [data-recipe-filters] {
-  gap: clamp(1rem, 2vw, 1.5rem);
+  display: grid;
+  gap: clamp(0.55rem, 0.9vw, 0.85rem);
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  align-items: start;
+  grid-auto-flow: row dense;
+  padding: clamp(0.85rem, 1.4vw, 1.15rem);
+}
+
+@media (min-width: 50rem) {
+  [data-recipe-filters] {
+    grid-template-columns: minmax(17rem, 1.25fr) repeat(2, minmax(11rem, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  [data-recipe-filters] {
+    grid-template-columns: minmax(18rem, 1.35fr) repeat(2, minmax(11.5rem, 1fr));
+  }
+}
+
+[data-recipe-filters] .filters-field {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.25rem, 0.5vw, 0.45rem);
+}
+
+[data-recipe-filters] .filters-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: clamp(0.3rem, 0.8vw, 0.6rem);
 }
 
 [data-recipe-filters] .filters-label {
   font-weight: 600;
+  font-size: 0.95rem;
+}
+
+[data-recipe-filters] .filters-note {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--color-muted);
+}
+
+[data-recipe-filters] .filters-note[data-variant="muted"] {
+  opacity: 0.85;
 }
 
 [data-recipe-filters] select,
@@ -508,7 +554,7 @@ pre {
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: calc(var(--radius) / 1.5);
-  padding: 0.55rem 0.75rem;
+  padding: 0.45rem 0.65rem;
   transition: border-color var(--transition), box-shadow var(--transition);
 }
 
@@ -519,6 +565,6 @@ pre {
 }
 
 [data-recipe-filters] select[multiple] {
-  min-height: 10rem;
-  padding-right: 0.35rem;
+  min-height: 5.5rem;
+  padding-right: 0.3rem;
 }
