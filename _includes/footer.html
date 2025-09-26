@@ -1,5 +1,8 @@
 <footer class="site-footer" role="contentinfo">
-  <div class="wrap">
-    <p>&copy; {{ site.time | date: '%Y' }} {{ site.title }}. All rights reserved.</p>
+  <div class="container">
+    <div class="stack" data-gap="sm">
+      <p>&copy; {{ site.time | date: '%Y' }} {{ site.title | default: 'Working with Carl' }}.</p>
+      <p><a href="{{ '/feed.xml' | relative_url }}">Subscribe via RSS</a></p>
+    </div>
   </div>
 </footer>
