@@ -108,5 +108,6 @@ This command builds the site and serves it with live reload at `http://localhost
 - **Missing images:** Confirm the file path starts with `/assets/` and that the file is committed.
 - **Liquid errors:** Check that front matter keys are spelled correctly and that YAML indentation is consistent.
 - **Filters not working:** Verify that the recipe front matter includes the expected fields and that tags match the filter options exactly.
+- **`bundle install` returns `Gem::Net::HTTPClientException 403 "Forbidden"`:** This usually means an upstream proxy or firewall is blocking outbound HTTPS traffic to `rubygems.org`. Confirm general network access with `curl -I https://rubygems.org/`; if that also returns 403, use an allowed network, configure the required proxy credentials, or run inside the official `jekyll/jekyll` Docker image which bundles the dependencies.
 
 Happy publishing!
