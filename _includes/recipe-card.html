@@ -7,11 +7,11 @@
 {% assign recipe_difficulty_attr = include.recipe.difficulty | append: '' | strip | downcase %}
 {% assign recipe_total_time_attr = '' %}
 {% if include.recipe.total_time_minutes %}
-  {% assign recipe_total_time_attr = include.recipe.total_time_minutes | strip %}
+  {% assign recipe_total_time_attr = include.recipe.total_time_minutes | append: '' | strip %}
 {% elsif include.recipe.total_minutes %}
-  {% assign recipe_total_time_attr = include.recipe.total_minutes | strip %}
+  {% assign recipe_total_time_attr = include.recipe.total_minutes | append: '' | strip %}
 {% elsif include.recipe.total_time %}
-  {% assign recipe_total_time_attr = include.recipe.total_time | strip %}
+  {% assign recipe_total_time_attr = include.recipe.total_time | append: '' | strip %}
 {% endif %}
 <article class="card stack" data-gap="sm" data-recipe-card="true" data-tags="{{ recipe_tags_attr }}" data-difficulty="{{ recipe_difficulty_attr }}" data-totaltime="{{ recipe_total_time_attr }}">
   <header class="stack" data-gap="xs">
