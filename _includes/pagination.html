@@ -1,0 +1,19 @@
+{% if paginator %}
+<nav class="cluster pagination" aria-label="Pagination navigation">
+  <div>
+    {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path | relative_url }}">&larr; Newer posts</a>
+    {% else %}
+    <span class="meta">&larr; Newer posts</span>
+    {% endif %}
+  </div>
+  <div class="meta">Page {{ paginator.page }} of {{ paginator.total_pages }}</div>
+  <div>
+    {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path | relative_url }}">Older posts &rarr;</a>
+    {% else %}
+    <span class="meta">Older posts &rarr;</span>
+    {% endif %}
+  </div>
+</nav>
+{% endif %}

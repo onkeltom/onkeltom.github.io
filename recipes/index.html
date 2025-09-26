@@ -1,6 +1,26 @@
 ---
-layout: list
+layout: default
 title: Recipes
 permalink: /recipes/
-collection: recipes
 ---
+<section class="stack" data-gap="lg" aria-labelledby="recipes-title">
+  <header class="stack" data-gap="sm">
+    <h1 id="recipes-title">{{ page.title }}</h1>
+    {% if page.description %}
+    <p class="meta">{{ page.description }}</p>
+    {% endif %}
+  </header>
+  {% assign all_recipes = site.recipes | sort: 'title' %}
+  {% assign recipes_count = all_recipes | size %}
+  {% if recipes_count > 0 %}
+  <ul class="card-grid" role="list">
+    {% for recipe in all_recipes %}
+    <li>{% include recipe-card.html recipe=recipe %}</li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <div class="card stack" data-gap="xs">
+    <p class="meta">No recipes published yet. Check back soon.</p>
+  </div>
+  {% endif %}
+</section>
