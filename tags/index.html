@@ -69,7 +69,7 @@ permalink: /tags/
             {% endfor %}
           {% endif %}
         {% endfor %}
-        {% assign tag_query = tag_slug | uri_escape %}
+        {% assign tag_query = tag_slug | url_encode %}
         <li class="card stack" data-gap="xs">
           <h2 class="h3">{{ label }}</h2>
           <p class="meta">
