@@ -1,0 +1,86 @@
+---
+layout: default
+title: Tags
+permalink: /tags/
+---
+{% assign tag_entries = '' %}
+{% assign seen_slugs = '' %}
+{% for tag_pair in site.tags %}
+  {% assign tag_name = tag_pair[0] | strip %}
+  {% if tag_name != '' %}
+    {% assign tag_slug = tag_name | downcase %}
+    {% assign slug_marker = '|' | append: tag_slug | append: '|' %}
+    {% unless seen_slugs contains slug_marker %}
+      {% assign seen_slugs = seen_slugs | append: slug_marker %}
+      {% assign tag_entries = tag_entries | append: tag_name | append: '::' | append: tag_slug | append: '|' %}
+    {% endunless %}
+  {% endif %}
+{% endfor %}
+{% for recipe in site.recipes %}
+  {% if recipe.tags %}
+    {% for tag in recipe.tags %}
+      {% assign trimmed_tag = tag | strip %}
+      {% if trimmed_tag != '' %}
+        {% assign tag_slug = trimmed_tag | downcase %}
+        {% assign slug_marker = '|' | append: tag_slug | append: '|' %}
+        {% unless seen_slugs contains slug_marker %}
+          {% assign seen_slugs = seen_slugs | append: slug_marker %}
+          {% assign tag_entries = tag_entries | append: trimmed_tag | append: '::' | append: tag_slug | append: '|' %}
+        {% endunless %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+<section class="stack" data-gap="lg" aria-labelledby="tags-title">
+  <header class="stack" data-gap="sm">
+    <h1 id="tags-title">{{ page.title }}</h1>
+    <p class="meta">Browse content by tag across posts and recipes.</p>
+  </header>
+  {% if tag_entries == '' %}
+  <div class="card stack" data-gap="xs">
+    <p class="meta">Tags will appear once posts or recipes include them.</p>
+  </div>
+  {% else %}
+  {% assign all_tags = tag_entries | split: '|' | sort_natural %}
+  <ul class="stack" role="list" data-gap="md">
+    {% for tag in all_tags %}
+      {% assign tag_parts = tag | strip | split: '::' %}
+      {% assign label = tag_parts[0] | strip %}
+      {% assign tag_slug = tag_parts[1] | default: tag_parts[0] | strip | downcase %}
+      {% if label != '' %}
+        {% assign label_downcase = label | downcase %}
+        {% assign post_count = 0 %}
+        {% for post in site.posts %}
+          {% if post.tags %}
+            {% for post_tag in post.tags %}
+              {% if post_tag | downcase == label_downcase %}
+                {% assign post_count = post_count | plus: 1 %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+        {% assign recipe_count = 0 %}
+        {% for recipe in site.recipes %}
+          {% if recipe.tags %}
+            {% for recipe_tag in recipe.tags %}
+              {% if recipe_tag | downcase == label_downcase %}
+                {% assign recipe_count = recipe_count | plus: 1 %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+        {% assign tag_query = tag_slug | uri_escape %}
+        <li class="card stack" data-gap="xs">
+          <h2 class="h3">{{ label }}</h2>
+          <p class="meta">
+            <a href="{{ '/posts/' | relative_url }}?tag={{ tag_query }}">View posts</a>
+            ({{ post_count }}) ·
+            <a href="{{ '/recipes/' | relative_url }}?tags={{ tag_query }}">View recipes</a>
+            ({{ recipe_count }})
+          </p>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+  {% endif %}
+</section>
