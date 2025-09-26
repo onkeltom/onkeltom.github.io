@@ -12,10 +12,28 @@
 <link rel="canonical" href="{{ page.url | absolute_url }}">
 {% endif %}
 <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
-<link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }}" href="{{ '/feed.xml' | relative_url }}">
+{% assign feed_path = site.feed.path | default: '/feed.xml' %}
+<link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }}" href="{{ feed_path | absolute_url }}">
 <link rel="icon" type="image/svg+xml" href="{{ '/favicon.svg' | relative_url }}">
 <link rel="apple-touch-icon" href="{{ '/favicon.svg' | relative_url }}">
 <meta name="theme-color" content="#c26d1c">
-<meta property="og:image" content="{{ page.og_image | default: page.image | default: site.og_image | default: '/assets/img/og-default.svg' | absolute_url }}">
+{% assign og_image = page.og_image %}
+{% if og_image == nil and page.image %}
+  {% if page.image.path %}
+    {% assign og_image = page.image.path %}
+  {% else %}
+    {% assign og_image = page.image %}
+  {% endif %}
+{% endif %}
+{% if og_image == nil %}
+  {% assign og_image = site.og_image %}
+{% endif %}
+{% assign og_image = og_image | default: '/assets/img/og-default.svg' %}
+{% if og_image contains '://' %}
+  {% assign og_image_url = og_image %}
+{% else %}
+  {% assign og_image_url = og_image | absolute_url %}
+{% endif %}
+<meta property="og:image" content="{{ og_image_url }}">
 <meta name="twitter:card" content="summary_large_image">
 {% seo %}

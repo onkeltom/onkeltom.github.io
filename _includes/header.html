@@ -6,7 +6,7 @@
     {% assign is_about = page.url == '/about/' %}
     <div class="cluster">
       <a class="site-title" href="{{ '/' | relative_url }}">Working with Carl</a>
-      <nav class="primary-nav" aria-label="Primary">
+      <nav class="primary-nav" aria-label="Primary" role="navigation">
         <ul class="cluster" data-justify="start" role="list">
           <li><a href="{{ '/' | relative_url }}"{% if is_home %} aria-current="page"{% endif %}>Home</a></li>
           <li><a href="{{ '/posts/' | relative_url }}"{% if is_posts %} aria-current="page"{% endif %}>Posts</a></li>
