@@ -377,3 +377,23 @@ pre {
     background-color: rgba(245, 237, 228, 0.08);
   }
 }
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.card-grid > li {
+  height: 100%;
+}
+
+.card-grid > li > .card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

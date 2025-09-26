@@ -1,0 +1,28 @@
+<article class="card stack" data-gap="sm">
+  <header class="stack" data-gap="xs">
+    <h2 class="recipe-card-title"><a href="{{ include.recipe.url | relative_url }}">{{ include.recipe.title }}</a></h2>
+    {% if include.recipe.total_time or include.recipe.difficulty %}
+    <div class="cluster meta" data-justify="start">
+      {% if include.recipe.total_time %}
+      <span class="meta-item">{{ include.recipe.total_time }}</span>
+      {% endif %}
+      {% if include.recipe.difficulty %}
+      <span class="meta-item">{{ include.recipe.difficulty }}</span>
+      {% endif %}
+    </div>
+    {% endif %}
+  </header>
+  {% if include.recipe.summary or include.recipe.description %}
+  <p>{{ include.recipe.summary | default: include.recipe.description | strip_html }}</p>
+  {% endif %}
+  {% if include.recipe.tags and include.recipe.tags != empty %}
+  <footer>
+    <h3 class="visually-hidden">Recipe tags</h3>
+    <ul class="cluster" data-justify="start" role="list">
+      {% for tag in include.recipe.tags %}
+      <li><span class="tag">{{ tag }}</span></li>
+      {% endfor %}
+    </ul>
+  </footer>
+  {% endif %}
+</article>

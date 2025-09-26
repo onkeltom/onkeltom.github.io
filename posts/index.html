@@ -1,6 +1,35 @@
 ---
-layout: list
+layout: default
 title: Posts
 permalink: /posts/
-collection: posts
 ---
+<section class="stack" data-gap="lg" aria-labelledby="posts-title">
+  <header class="stack" data-gap="sm">
+    <h1 id="posts-title">{{ page.title }}</h1>
+    {% if page.description %}
+    <p class="meta">{{ page.description }}</p>
+    {% endif %}
+  </header>
+  {% assign total_posts = site.posts | size %}
+  <ul class="stack" role="list" data-gap="lg">
+    {% if paginator and paginator.posts %}
+      {% for post in paginator.posts %}
+      <li>{% include post-card.html post=post %}</li>
+      {% endfor %}
+    {% elsif total_posts > 0 %}
+      {% for post in site.posts limit:12 %}
+      <li>{% include post-card.html post=post %}</li>
+      {% endfor %}
+    {% else %}
+    <li>
+      <div class="card stack" data-gap="xs">
+        <p class="meta">No posts yet. Check back soon.</p>
+      </div>
+    </li>
+    {% endif %}
+  </ul>
+  {% if not paginator and total_posts > 12 %}
+  <p class="meta">Showing the latest 12 posts. Enable the <code>jekyll-paginate</code> plugin and <code>paginate</code> setting in <code>_config.yml</code> to browse the full archive.</p>
+  {% endif %}
+  {% include pagination.html %}
+</section>

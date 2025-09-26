@@ -1,14 +1,62 @@
 ---
 layout: default
 ---
+{% assign sanitized_content = page.content | strip_html | strip_newlines | strip %}
+{% assign reading_minutes = 0 %}
+{% if sanitized_content != '' %}
+{% assign word_count = sanitized_content | split: ' ' | size %}
+{% assign reading_minutes = word_count | plus: 199 | divided_by: 200 %}
+{% if reading_minutes == 0 %}
+{% assign reading_minutes = 1 %}
+{% endif %}
+{% endif %}
+{% if reading_minutes > 0 %}
+{% assign reading_time_precomputed = 'true' %}
+{% else %}
+{% assign reading_time_precomputed = 'false' %}
+{% endif %}
 <article class="card stack" data-gap="lg" itemscope itemtype="https://schema.org/Article">
   <header class="stack" data-gap="sm">
     <h1 class="post-title" itemprop="headline">{{ page.title }}</h1>
-    {% if page.date %}
-    <p class="meta"><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: '%B %-d, %Y' }}</time></p>
+    {% if page.date or sanitized_content != '' %}
+    <div class="cluster meta" data-justify="start">
+      {% if page.date %}
+      <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: '%B %-d, %Y' }}</time>
+      {% endif %}
+      <span data-reading-time data-reading-time-precomputed="{{ reading_time_precomputed }}"{% if reading_minutes == 0 %} hidden{% endif %}>
+        {% if reading_minutes > 0 %}
+        {{ reading_minutes }} min read
+        {% endif %}
+      </span>
+    </div>
     {% endif %}
   </header>
-  <div class="prose" itemprop="articleBody">
+  <div class="prose" itemprop="articleBody" data-reading-time-source>
     {{ content }}
   </div>
+  {% if page.tags and page.tags != empty %}
+  <footer class="stack" data-gap="xs">
+    <h2 class="visually-hidden">Post tags</h2>
+    <ul class="cluster" data-justify="start" role="list">
+      {% for tag in page.tags %}
+      <li><span class="tag">{{ tag }}</span></li>
+      {% endfor %}
+    </ul>
+  </footer>
+  {% endif %}
 </article>
+<script>
+  (function () {
+    var target = document.querySelector('[data-reading-time]');
+    if (!target || target.dataset.readingTimePrecomputed === 'true') return;
+    var source = document.querySelector('[data-reading-time-source]');
+    if (!source) return;
+    var text = source.textContent || '';
+    var words = text.trim().split(/\s+/).filter(Boolean).length;
+    if (!words) return;
+    var minutes = Math.max(1, Math.ceil(words / 200));
+    target.textContent = minutes + ' min read';
+    target.dataset.readingTimePrecomputed = 'true';
+    target.removeAttribute('hidden');
+  })();
+</script>

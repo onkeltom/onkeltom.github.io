@@ -4,11 +4,90 @@ layout: default
 <article class="card stack" data-gap="lg" itemscope itemtype="https://schema.org/Recipe">
   <header class="stack" data-gap="sm">
     <h1 class="recipe-title" itemprop="name">{{ page.title }}</h1>
-    {% if page.description %}
-    <p class="meta" itemprop="description">{{ page.description }}</p>
+    {% if page.total_time or page.difficulty %}
+    <div class="cluster meta" data-justify="start">
+      {% if page.total_time %}
+      <span itemprop="totalTime">{{ page.total_time }}</span>
+      {% endif %}
+      {% if page.difficulty %}
+      <span>{{ page.difficulty }}</span>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% if page.tags and page.tags != empty %}
+    <ul class="cluster" data-justify="start" role="list">
+      {% for tag in page.tags %}
+      <li><span class="tag">{{ tag }}</span></li>
+      {% endfor %}
+    </ul>
     {% endif %}
   </header>
-  <div class="prose" itemprop="recipeInstructions">
-    {{ content }}
+  <div class="stack" data-gap="lg">
+    {% assign summary_text = page.summary | default: page.description %}
+    {% if summary_text %}
+    <section class="stack" data-gap="xs">
+      <h2>Summary</h2>
+      <p itemprop="description">{{ summary_text }}</p>
+    </section>
+    {% endif %}
+    {% if page.mental_load_tip %}
+    <section class="stack" data-gap="xs">
+      <h2>Mental load tip</h2>
+      <p>{{ page.mental_load_tip }}</p>
+    </section>
+    {% endif %}
+    {% if page.ingredients %}
+    <section class="stack" data-gap="xs">
+      <h2>Ingredients</h2>
+      <ul class="stack" role="list" data-gap="xs">
+        {% for ingredient in page.ingredients %}
+        <li itemprop="recipeIngredient">{{ ingredient }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+    {% if page.steps %}
+    <section class="stack" data-gap="xs">
+      <h2>Steps</h2>
+      <ol class="stack" data-gap="sm">
+        {% for step in page.steps %}
+        <li itemprop="recipeInstructions">{{ step }}</li>
+        {% endfor %}
+      </ol>
+    </section>
+    {% endif %}
+    {% if page.notes %}
+    <section class="stack" data-gap="xs">
+      <h2>Notes</h2>
+      <div class="prose">{{ page.notes | markdownify }}</div>
+    </section>
+    {% endif %}
+    {% if page.nutrition %}
+    <section class="stack" data-gap="xs">
+      <h2>Nutrition</h2>
+      <dl class="stack" data-gap="xs">
+        {% for fact in page.nutrition %}
+        {% assign label = fact[0] %}
+        {% assign value = fact[1] %}
+        <div class="cluster">
+          <dt>{{ label | capitalize }}</dt>
+          <dd>{{ value }}</dd>
+        </div>
+        {% endfor %}
+      </dl>
+    </section>
+    {% endif %}
+    {% if page.serves %}
+    <section class="stack" data-gap="xs">
+      <h2>Serves</h2>
+      <p itemprop="recipeYield">{{ page.serves }}</p>
+    </section>
+    {% endif %}
+    {% if content %}
+    <section class="stack" data-gap="xs">
+      <h2>Additional details</h2>
+      <div class="prose">{{ content }}</div>
+    </section>
+    {% endif %}
   </div>
 </article>
