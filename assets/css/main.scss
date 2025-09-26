@@ -397,3 +397,34 @@ pre {
   flex-direction: column;
   justify-content: space-between;
 }
+
+[data-recipe-filters] {
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+[data-recipe-filters] .filters-label {
+  font-weight: 600;
+}
+
+[data-recipe-filters] select,
+[data-recipe-filters] input {
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: calc(var(--radius) / 1.5);
+  padding: 0.55rem 0.75rem;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+[data-recipe-filters] select:focus-visible,
+[data-recipe-filters] input:focus-visible {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 0.15rem rgba(194, 109, 28, 0.25);
+}
+
+[data-recipe-filters] select[multiple] {
+  min-height: 10rem;
+  padding-right: 0.35rem;
+}
