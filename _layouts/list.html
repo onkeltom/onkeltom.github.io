@@ -1,0 +1,32 @@
+---
+layout: default
+---
+<section class="archive" aria-labelledby="archive-title">
+  <header class="archive-header">
+    <h1 id="archive-title">{{ page.title }}</h1>
+    {% if page.description %}
+    <p class="archive-description">{{ page.description }}</p>
+    {% endif %}
+  </header>
+  <ul class="archive-list" role="list">
+    {% assign items = site.posts %}
+    {% if page.collection == 'recipes' %}
+      {% assign items = site.recipes %}
+    {% endif %}
+    {% for item in items %}
+    <li class="archive-item">
+      <article>
+        <h2><a href="{{ item.url | relative_url }}">{{ item.title }}</a></h2>
+        {% if item.date %}
+        <p class="archive-meta"><time datetime="{{ item.date | date_to_xmlschema }}">{{ item.date | date: '%B %-d, %Y' }}</time></p>
+        {% endif %}
+        {% if item.description %}
+        <p class="archive-excerpt">{{ item.description }}</p>
+        {% endif %}
+      </article>
+    </li>
+    {% else %}
+    <li class="archive-item empty">No entries yet. Check back soon.</li>
+    {% endfor %}
+  </ul>
+</section>
