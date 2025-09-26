@@ -1,4 +1,19 @@
-<article class="card stack" data-gap="sm">
+{% capture recipe_tags_attr %}
+{% if include.recipe.tags %}
+{% for tag in include.recipe.tags %}{{ tag | strip | downcase }}{% unless forloop.last %},{% endunless %}{% endfor %}
+{% endif %}
+{% endcapture %}
+{% assign recipe_tags_attr = recipe_tags_attr | strip %}
+{% assign recipe_difficulty_attr = include.recipe.difficulty | append: '' | strip | downcase %}
+{% assign recipe_total_time_attr = '' %}
+{% if include.recipe.total_time_minutes %}
+  {% assign recipe_total_time_attr = include.recipe.total_time_minutes | strip %}
+{% elsif include.recipe.total_minutes %}
+  {% assign recipe_total_time_attr = include.recipe.total_minutes | strip %}
+{% elsif include.recipe.total_time %}
+  {% assign recipe_total_time_attr = include.recipe.total_time | strip %}
+{% endif %}
+<article class="card stack" data-gap="sm" data-recipe-card="true" data-tags="{{ recipe_tags_attr }}" data-difficulty="{{ recipe_difficulty_attr }}" data-totaltime="{{ recipe_total_time_attr }}">
   <header class="stack" data-gap="xs">
     <h2 class="recipe-card-title"><a href="{{ include.recipe.url | relative_url }}">{{ include.recipe.title }}</a></h2>
     {% if include.recipe.total_time or include.recipe.difficulty %}

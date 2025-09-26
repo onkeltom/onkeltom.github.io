@@ -11,11 +11,49 @@ permalink: /recipes/
     {% endif %}
   </header>
   {% assign all_recipes = site.recipes | sort: 'title' %}
+  {% assign recipe_tags = '' | split: '' %}
+  {% for recipe in all_recipes %}
+    {% if recipe.tags %}
+      {% assign recipe_tags = recipe_tags | concat: recipe.tags %}
+    {% endif %}
+  {% endfor %}
+  {% assign recipe_tags = recipe_tags | uniq | sort %}
   {% assign recipes_count = all_recipes | size %}
+  <form class="card stack" data-gap="sm" data-recipe-filters aria-label="Filter recipes">
+    <div class="stack" data-gap="xs">
+      <label class="filters-label" for="filter-tags">Tags</label>
+      {% if recipe_tags != empty %}
+      <select id="filter-tags" name="tags" multiple data-filter-tags>
+        {% for tag in recipe_tags %}
+        {% assign option_value = tag | strip | downcase %}
+        <option value="{{ option_value }}">{{ tag }}</option>
+        {% endfor %}
+      </select>
+      <p class="meta">Select one or more tags to narrow the list.</p>
+      {% else %}
+      <select id="filter-tags" name="tags" multiple disabled data-filter-tags>
+        <option>Tags will appear once recipes include them.</option>
+      </select>
+      <p class="meta">Tag filtering will be available as soon as recipes have tags.</p>
+      {% endif %}
+    </div>
+    <div class="stack" data-gap="xs">
+      <label class="filters-label" for="filter-difficulty">Difficulty</label>
+      <select id="filter-difficulty" name="difficulty" data-filter-difficulty>
+        <option value="any">Any</option>
+        <option value="ultra-easy">Ultra-easy</option>
+        <option value="easy">Easy</option>
+      </select>
+    </div>
+    <div class="stack" data-gap="xs">
+      <label class="filters-label" for="filter-max-time">Max total time (minutes)</label>
+      <input id="filter-max-time" name="max" type="number" inputmode="numeric" min="0" step="1" placeholder="e.g. 20" data-filter-time>
+    </div>
+  </form>
   {% if recipes_count > 0 %}
   <ul class="card-grid" role="list">
     {% for recipe in all_recipes %}
-    <li>{% include recipe-card.html recipe=recipe %}</li>
+    <li data-recipe-card-container="true">{% include recipe-card.html recipe=recipe %}</li>
     {% endfor %}
   </ul>
   {% else %}
@@ -24,3 +62,4 @@ permalink: /recipes/
   </div>
   {% endif %}
 </section>
+<script src="{{ '/assets/js/filters.js' | relative_url }}" defer></script>
