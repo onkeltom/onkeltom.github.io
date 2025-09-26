@@ -27,6 +27,3 @@ defaults:
     values:
       layout: recipe
       is_recipe: true
-sass:
-  sass_dir: assets/css
-  style: compressed
