@@ -46,9 +46,11 @@ permalink: /posts/
     </li>
     {% endif %}
   </ul>
-  {% if not paginator and total_posts > 12 %}
-  <p class="meta">Showing the latest 12 posts. Enable the <code>jekyll-paginate</code> plugin and <code>paginate</code> setting in <code>_config.yml</code> to browse the full archive.</p>
-  {% endif %}
+  {% unless paginator %}
+    {% if total_posts > 12 %}
+    <p class="meta">Showing the latest 12 posts. Enable the <code>jekyll-paginate</code> plugin and <code>paginate</code> setting in <code>_config.yml</code> to browse the full archive.</p>
+    {% endif %}
+  {% endunless %}
   {% include pagination.html %}
 </section>
 <script>
