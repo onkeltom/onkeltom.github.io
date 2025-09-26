@@ -1,7 +1,7 @@
 :root {
   color-scheme: light dark;
   --font-system: 'Inter var', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-  --measure: 70ch;
+  --measure: 66ch;
   --gutter: clamp(1rem, 4vw, 2.5rem);
   --stack-gap: clamp(1.25rem, 3vw, 2rem);
   --cluster-gap: clamp(0.75rem, 2vw, 1.5rem);
@@ -67,16 +67,13 @@ main:focus {
 
 a {
   color: inherit;
-  text-decoration-color: rgba(194, 109, 28, 0.4);
-  text-decoration-thickness: 0.12em;
-  text-underline-offset: 0.2em;
-  transition: color var(--transition), text-decoration-color var(--transition);
+  text-decoration: none;
+  transition: color var(--transition);
 }
 
 a:hover,
 a:focus-visible {
   color: var(--color-accent-strong);
-  text-decoration-color: currentColor;
 }
 
 img {
@@ -96,7 +93,7 @@ ol {
 }
 
 p + p {
-  margin-top: 1em;
+  margin-top: 0.9em;
 }
 
 ul,
@@ -139,6 +136,25 @@ h2 {
 
 h3 {
   font-size: clamp(1.35rem, 1.45rem + 0.3vw, 1.8rem);
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+  hanging-punctuation: first;
+}
+
+:is(h1, h2, h3) a {
+  box-shadow: 0 -0.05em 0 0 inset currentColor;
+  text-decoration: none;
+  transition: box-shadow var(--transition), color var(--transition);
+}
+
+:is(h1, h2, h3) a:hover,
+:is(h1, h2, h3) a:focus-visible {
+  color: var(--color-accent-strong);
+  box-shadow: 0 -0.12em 0 0 inset currentColor;
 }
 
 h4,
@@ -213,9 +229,10 @@ h6 {
   top: 0;
   inset-inline: 0;
   background-color: var(--color-surface);
+  background-color: color-mix(in srgb, var(--color-surface) 85%, transparent);
   border-bottom: 1px solid var(--color-border);
-  backdrop-filter: blur(6px);
-  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0.5rem 1.25rem -1.25rem rgba(17, 17, 17, 0.25);
   z-index: 999;
 }
 
@@ -239,20 +256,22 @@ h6 {
 .primary-nav a {
   display: inline-flex;
   align-items: center;
-  padding: 0.25rem 0.5rem;
-  border-radius: calc(var(--radius) / 2);
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
   transition: background-color var(--transition), color var(--transition), text-decoration-color var(--transition);
 }
 
 .primary-nav a:hover,
 .primary-nav a:focus-visible {
   background-color: rgba(194, 109, 28, 0.12);
+  background-color: color-mix(in srgb, var(--color-accent) 12%, transparent);
   color: var(--color-accent-strong);
   text-decoration: none;
 }
 
 .primary-nav a[aria-current="page"] {
   background-color: rgba(194, 109, 28, 0.18);
+  background-color: color-mix(in srgb, var(--color-accent) 18%, transparent);
   color: var(--color-accent-strong);
 }
 
@@ -340,21 +359,31 @@ h6 {
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   padding: clamp(1.25rem, 2vw, 1.75rem);
-  box-shadow: var(--shadow-soft);
+  box-shadow: none;
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+
+.card:hover,
+.card:focus-within {
+  transform: translateY(-2px);
+  box-shadow: 0 1rem 2rem -1.25rem rgba(17, 17, 17, 0.25);
+  border-color: var(--color-border);
+  border-color: color-mix(in srgb, var(--color-border) 70%, transparent);
 }
 
 .tag {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.1rem 0.5rem;
+  padding: 0.18rem 0.6rem;
   border-radius: 999px;
-  background-color: rgba(194, 109, 28, 0.16);
-  color: var(--color-accent-strong);
-  font-size: 0.85rem;
+  background-color: rgba(194, 109, 28, 0.08);
+  background-color: color-mix(in srgb, var(--color-accent) 8%, transparent);
+  color: #8a4407;
+  font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
 }
 
 .meta {
@@ -363,7 +392,16 @@ h6 {
 }
 
 .prose > * + * {
-  margin-top: 1em;
+  margin-top: 0.9em;
+}
+
+.prose p a,
+.prose li a {
+  text-decoration: underline;
+  text-decoration-color: rgba(194, 109, 28, 0.35);
+  text-decoration-thickness: 0.09em;
+  text-underline-offset: 0.2em;
+  text-decoration-skip-ink: auto;
 }
 
 .prose ul,
@@ -406,14 +444,31 @@ pre {
 
 pre {
   padding: 1rem;
-  background-color: rgba(31, 26, 23, 0.08);
+  background-color: color-mix(in srgb, var(--color-text) 7%, transparent);
+  border: 1px solid var(--color-border);
   border-radius: calc(var(--radius) / 1.3);
   overflow-x: auto;
 }
 
 @media (prefers-color-scheme: dark) {
   pre {
-    background-color: rgba(245, 237, 228, 0.08);
+    background-color: color-mix(in srgb, var(--color-text) 7%, transparent);
+  }
+
+  .card:hover,
+  .card:focus-within {
+    box-shadow: 0 1rem 2rem -1.25rem rgba(0, 0, 0, 0.6);
+  }
+
+  .primary-nav a:hover,
+  .primary-nav a[aria-current="page"] {
+    color: #ffda9f;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
   }
 }
 
