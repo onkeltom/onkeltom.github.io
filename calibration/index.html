@@ -1,0 +1,56 @@
+---
+layout: default
+title: Calibration Capture
+description: Viewport-first calibration workspace with viewport, stepper, and filmstrip layout.
+permalink: /calibration/
+---
+
+<section class="calibration" aria-labelledby="calibration-heading">
+  <header class="calibration__header">
+    <h1 id="calibration-heading">Calibration workspace</h1>
+    <p class="calibration__lede">
+      Align the capture viewport, review the compact stepper, and manage saved frames in the filmstrip below.
+    </p>
+  </header>
+  <div class="calibration-layout" role="application" aria-describedby="calibration-heading">
+    <section class="calibration-viewport" aria-label="Viewport preview">
+      <div class="calibration-viewport__frame">
+        <p>Viewport preview placeholder</p>
+      </div>
+    </section>
+    <aside class="calibration-stepper" aria-label="Calibration steps">
+      <h2 class="calibration-stepper__title">Steps</h2>
+      <ol class="calibration-stepper__list">
+        <li>
+          <h3>1. Position camera</h3>
+          <p>Ensure the athlete is centered in the frame with full runway visibility.</p>
+        </li>
+        <li>
+          <h3>2. Confirm scale</h3>
+          <p>Place the reference markers at the start and end of the calibration zone.</p>
+        </li>
+        <li>
+          <h3>3. Lock exposure</h3>
+          <p>Freeze auto settings to maintain consistent brightness while capturing frames.</p>
+        </li>
+      </ol>
+      <div class="calibration-stepper__controls">
+        <button type="button" class="calibration-stepper__button" aria-label="Previous step">Back</button>
+        <button type="button" class="calibration-stepper__button calibration-stepper__button--primary" aria-label="Next step">Next</button>
+      </div>
+    </aside>
+    <section class="calibration-filmstrip" aria-label="Captured frames">
+      <div class="calibration-filmstrip__header">
+        <h2 class="calibration-filmstrip__title">Filmstrip</h2>
+        <p class="calibration-filmstrip__hint">Scroll to review captured frames.</p>
+      </div>
+      <div class="calibration-filmstrip__scroller" role="list">
+        <button type="button" role="listitem" class="calibration-filmstrip__frame calibration-filmstrip__frame--active" aria-label="Frame 1 selected">Frame 1</button>
+        <button type="button" role="listitem" class="calibration-filmstrip__frame" aria-label="Frame 2">Frame 2</button>
+        <button type="button" role="listitem" class="calibration-filmstrip__frame" aria-label="Frame 3">Frame 3</button>
+        <button type="button" role="listitem" class="calibration-filmstrip__frame" aria-label="Frame 4">Frame 4</button>
+        <button type="button" role="listitem" class="calibration-filmstrip__frame" aria-label="Frame 5">Frame 5</button>
+      </div>
+    </section>
+  </div>
+</section>
